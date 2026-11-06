@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian Interfaz</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body class="tema-claro">
+    <!-- Parte 1: Contenedor vacío para bienvenida dinámica -->
+    <div id="contenedor-bienvenida"></div>
+
+    <!-- Parte 2: Formulario de configuración -->
+    <form id = "formulario-configuracion">
+        <div class = "campo-formulario">
+            <label for = "nombre-usuario">Nombre de Usuario:</label>
+            <input type ="text" id = "nombre-usuario" name ="nombreUsuario" placeholder ="Introduce tu nombre"></imput>
+        </div>
+
+        <div class="campo-formulario">
+            <label for="selector-color">Color de fondo:</label>
+            <input type="color" id="selector-color" name="selectorColor" value="#ffffff">
+        </div>
+
+        <div class="campo-formulario">
+            <label for="selector-tema">Tema Visual:</label>
+            <select id="selector-tema" name="selectorTema">
+                <option value="claro">Modo Claro</option>
+                <option value="oscuro">Modo Oscuro</option>
+            </select>
+        </div>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Clases predefinidas de temas para el body (Criterio c) */
+body.tema-claro {
+    background-color: #ffffff;
+    color: #222222;
+}
+
+body.tema-oscuro {
+    background-color: #1e1e2f;
+    color: #f1f1f1;
+}
+
+#contenedor-bienvenida {
+    margin-bottom: 25px;
+}
+
+/* Estilos para el formulario y sus controles */
+form {
+    max-width: 360px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+body.tema-oscuro form {
+    border-color: #444;
+    background-color: #2a2a3d;
+}
+
+.campo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo-formulario label {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.campo-formulario input[type="text"],
+.campo-formulario select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+body.tema-oscuro .campo-formulario input[type="text"],
+body.tema-oscuro .campo-formulario select {
+    background-color: #1e1e2f;
+    color: #f1f1f1;
+    border-color: #555;
+}
+
+.campo-formulario input[type="color"] {
+    width: 60px;
+    height: 35px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
