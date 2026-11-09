@@ -16,15 +16,12 @@
 
 ```plaintext
 GUARDIAN_INTERFAZ/
-├── .github/
-│   └── workflows/
-│       └── deploy-pages.yml      # Flujo automatizado de despliegue en GitHub Pages
 ├── docs/
 │   └── DOCUMENTACION.md          # Documento técnico del proyecto
 ├── index.html                    # Estructura principal y formulario
+├── README.md                     # Información introductoria del repositorio
 ├── script.js                     # Lógica JavaScript (DOM, eventos y cookies)
-├── style.css                     # Estilos visuales y clases de temas
-└── README.md                     # Información introductoria del repositorio
+└── style.css                     # Estilos visuales y clases de temas
 ```
 
 ---
@@ -94,7 +91,6 @@ GUARDIAN_INTERFAZ/
 
 ## 5. Despliegue en GitHub Pages
 
-El proyecto incluye un flujo de trabajo automatizado en `.github/workflows/deploy-pages.yml` que:
-1. Se dispara con cada `push` a la rama `main`.
-2. Empaqueta los archivos necesarios para la ejecución de la aplicación web (`index.html`, `script.js` y `style.css`), manteniendo la documentación técnica en el repositorio sin exponerla en el despliegue web.
-3. Despliega la aplicación directamente en **GitHub Pages**.
+La aplicación está desplegada en **GitHub Pages** a través de la configuración nativa del repositorio:
+* **Origen de despliegue:** Rama `main` desde la raíz (`/root`).
+* **URL pública:** `https://bbaakkuu-svg.github.io/GUARDIAN_INTERFAZ/`
