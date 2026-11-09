@@ -17,6 +17,7 @@
 ```plaintext
 GUARDIAN_INTERFAZ/
 ├── docs/
+│   ├── jsdoc/                   # Documentación generada con JSDoc
 │   └── DOCUMENTACION.md          # Documento técnico del proyecto
 ├── index.html                    # Estructura principal y formulario
 ├── README.md                     # Información introductoria del repositorio

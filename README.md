@@ -12,6 +12,7 @@ Desarrollado para el ciclo de **1º de DAW (Desarrollo de Aplicaciones Web)**.
 * **`style.css`**: Estilos del formulario y clases de tema (`.tema-claro` y `.tema-oscuro`).
 * **`docs/`**: Carpeta de documentación técnica del proyecto:
   * [`docs/DOCUMENTACION.md`](docs/DOCUMENTACION.md): Documento técnico detallado con criterios, funciones y decisiones de diseño.
+  * `docs/jsdoc/`: Documentación técnica HTML generada automáticamente con JSDoc.
 
 ---
 
