@@ -12,4 +12,10 @@ Desarrollado para el ciclo de **1º de DAW (Desarrollo de Aplicaciones Web)**.
 * **`style.css`**: Estilos del formulario y clases de tema (`.tema-claro` y `.tema-oscuro`).
 * **`docs/`**: Carpeta de documentación técnica del proyecto:
   * [`docs/DOCUMENTACION.md`](docs/DOCUMENTACION.md): Documento técnico detallado con criterios, funciones y decisiones de diseño.
-* **`.github/workflows/deploy-pages.yml`**: Flujo de trabajo de GitHub Actions para el despliegue automático de la aplicación en GitHub Pages.
+
+---
+
+## Despliegue
+
+La aplicación se encuentra disponible online en GitHub Pages:  
+[https://bbaakkuu-svg.github.io/GUARDIAN_INTERFAZ/](https://bbaakkuu-svg.github.io/GUARDIAN_INTERFAZ/)
