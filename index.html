@@ -13,24 +13,30 @@
     <!-- Parte 1: Contenedor vacío para bienvenida dinámica -->
     <div id="contenedor-bienvenida"></div>
 
-    <!-- Parte 2: Formulario de configuración -->
-    <form id = "formulario-configuracion">
-        <div class = "campo-formulario">
-            <label for = "nombre-usuario">Nombre de Usuario:</label>
-            <input type ="text" id = "nombre-usuario" name ="nombreUsuario" placeholder ="Introduce tu nombre"></imput>
+    <!-- Parte 2 y 3: Formulario -->
+    <form id="formulario">
+        <div class="campo-formulario">
+            <label for="nombre-usuario">Nombre de Usuario:</label>
+            <input type="text" id="nombre-usuario" placeholder="Introduce tu nombre">
         </div>
 
         <div class="campo-formulario">
-            <label for="selector-color">Color de fondo:</label>
-            <input type="color" id="selector-color" name="selectorColor" value="#ffffff">
+            <label for="color-fondo">Color de fondo:</label>
+            <input type="color" id="color-fondo" value="#ffffff">
         </div>
 
         <div class="campo-formulario">
-            <label for="selector-tema">Tema Visual:</label>
-            <select id="selector-tema" name="selectorTema">
+            <label for="tema-visual">Tema Visual:</label>
+            <select id="tema-visual">
                 <option value="claro">Modo Claro</option>
                 <option value="oscuro">Modo Oscuro</option>
             </select>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="contenedor-botones">
+            <button type="submit" id="btn-guardar">Guardar Preferencias</button>
+            <button type="button" id="btn-restablecer">Restablecer Interfaz</button>
         </div>
     </form>
 </body>

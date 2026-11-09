@@ -1,59 +1,171 @@
-// Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
+// =============================================================================
+// FUNCIONES AUXILIARES PARA LA GESTIÓN DE COOKIES
+// =============================================================================
 
-    // =========================================================================
-    // PARTE 1: Estructura y Generación Dinámica del DOM (Criterio d)
-    // =========================================================================
-    const usuarioRegistrado = localStorage.getItem('usuarioRegistrado') || localStorage.getItem('usuario');
+/**
+ * Guarda una cookie en el navegador con nombre, valor y expiración opcional.
+ * @param {string} nombre - Nombre o identificador de la cookie.
+ * @param {string} valor - Valor a almacenar en la cookie.
+ * @param {number|null} [dias=null] - Días de validez. Si es null, será cookie de sesión.
+ */
+function crearCookie(nombre, valor, dias = null) {
+    let expires = "";
+    if (dias !== null) {
+        const fecha = new Date();
+        fecha.setDate(fecha.getDate() + dias);
+        expires = "; expires=" + fecha.toUTCString();
+    }
+    // Si no se especifican días, la cookie expira al cerrar el navegador
+    document.cookie = `${nombre}=${valor}${expires}; path=/`;
+}
 
-    if (usuarioRegistrado) {
-        const contenedor = document.getElementById('contenedor-bienvenida');
+/**
+ * Lee y recupera el valor de una cookie por su nombre.
+ * @param {string} nombre - Nombre de la cookie que se desea buscar.
+ * @returns {string|null} - Valor decodificado de la cookie o null si no se encuentra.
+ */
+function leerCookie(nombre) {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+        const [clave, valor] = cookies[i].trim().split("=");
+        if (clave === nombre) {
+            return valor;
+        }
+    }
+    return null;
+}
 
-        if (contenedor) {
-            // 1. Crear dinámicamente el elemento de encabezado (H2)
-            const encabezado = document.createElement('h2');
-            const textoEncabezado = document.createTextNode('¡Bienvenido de nuevo!');
-            encabezado.appendChild(textoEncabezado);
+/**
+ * Elimina una cookie configurando su fecha de caducidad en el pasado.
+ * @param {string} nombre - Nombre de la cookie a eliminar.
+ */
+function borrarCookie(nombre) {
+    document.cookie = `${nombre}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+}
 
-            // 2. Crear dinámicamente el elemento de párrafo (P)
-            const parrafo = document.createElement('p');
-            const textoParrafo = document.createTextNode('Nos alegramos de que sigas con nosotros.');
-            parrafo.appendChild(textoParrafo);
+// =============================================================================
+// LÓGICA PRINCIPAL AL CARGAR LA PÁGINA (DOM)
+// =============================================================================
 
-            // 3. Inyectar los nuevos elementos dentro del contenedor usando appendChild()
-            contenedor.appendChild(encabezado);
-            contenedor.appendChild(parrafo);
+document.addEventListener("DOMContentLoaded", () => {
+
+    // 1. Captura de elementos del DOM
+    const contenedorBienvenida = document.getElementById("contenedor-bienvenida");
+    const formulario = document.getElementById("formulario");
+    const campoNombre = document.getElementById("nombre-usuario");
+    const campoColor = document.getElementById("color-fondo");
+    const campoTema = document.getElementById("tema-visual");
+    const btnRestablecer = document.getElementById("btn-restablecer");
+
+    // 2. Recuperación de cookies al iniciar (Parte 3)
+    const nombreGuardado = leerCookie("nombre_usuario");
+    const colorGuardado = leerCookie("color_fondo");
+    const temaGuardado = leerCookie("tema_visual");
+
+    // Parte 1 (Criterio d): Si el usuario ya se ha registrado antes, crear bienvenida en el DOM
+    if (nombreGuardado) {
+        campoNombre.value = nombreGuardado;
+
+        // Crear dinámicamente elemento H2
+        const encabezado = document.createElement("h2");
+        const textoH2 = document.createTextNode(`¡Bienvenido de nuevo, ${nombreGuardado}!`);
+        encabezado.appendChild(textoH2);
+
+        // Crear dinámicamente elemento P
+        const parrafo = document.createElement("p");
+        const textoP = document.createTextNode("Nos alegramos de que sigas con nosotros.");
+        parrafo.appendChild(textoP);
+
+        // Inyectar en el contenedor con appendChild
+        contenedorBienvenida.appendChild(encabezado);
+        contenedorBienvenida.appendChild(parrafo);
+    }
+
+    // Si había un color guardado, aplicarlo al fondo y al control
+    if (colorGuardado) {
+        campoColor.value = colorGuardado;
+        document.body.style.backgroundColor = colorGuardado;
+    }
+
+    // Si había un tema guardado, aplicarlo con sus clases CSS
+    if (temaGuardado) {
+        campoTema.value = temaGuardado;
+        if (temaGuardado === "oscuro") {
+            document.body.classList.add("tema-oscuro");
+            document.body.classList.remove("tema-claro");
+        } else {
+            document.body.classList.add("tema-claro");
+            document.body.classList.remove("tema-oscuro");
         }
     }
 
-    // =========================================================================
-    // PARTE 2: Formulario y Modificación del Aspecto (Criterio c)
-    // =========================================================================
-    const selectorColor = document.getElementById('selector-color');
-    const selectorTema = document.getElementById('selector-tema');
+    // 3. Eventos en tiempo real (Parte 2 - Criterio c)
 
-    //Cambio del selector de color  aplicando document.body.style.backgroundColor
-    if (selectorColor) {
-        selectorColor.addEventListener('input', (evento) => {
-            document.body.style.backgroundColor = evento.target.value;
-        });
-    }
+    // Evento 'input': detecta el cambio instantáneo en el selector de color
+    campoColor.addEventListener("input", () => {
+        document.body.style.backgroundColor = campoColor.value;
+    });
 
-    //Cambio del menú desplegable modificando clases con element.classList.add()
-    if (selectorTema) {
-        selectorTema.addEventListener('change', (evento) => {
-            const temaSeleccionado = evento.target.value;
+    // Evento 'change': detecta el cambio en el selector de tema
+    campoTema.addEventListener("change", () => {
+        document.body.style.backgroundColor = ""; // Limpiamos el color en línea
 
-            // Se limpia el estilo en línea para que las propiedades de la clase CSS tomen efecto
-            document.body.style.backgroundColor = '';
+        if (campoTema.value === "oscuro") {
+            document.body.classList.add("tema-oscuro");
+            document.body.classList.remove("tema-claro");
+        } else {
+            document.body.classList.add("tema-claro");
+            document.body.classList.remove("tema-oscuro");
+        }
+    });
 
-            if (temaSeleccionado === 'oscuro') {
-                document.body.classList.add('tema-oscuro');
-                document.body.classList.remove('tema-claro');
-            } else {
-                document.body.classList.add('tema-claro');
-                document.body.classList.remove('tema-oscuro');
-            }
-        });
-    }
+    // 4. Guardar preferencias (Parte 3)
+    // Evento 'submit': detecta el envío del formulario mediante función flecha
+    formulario.addEventListener("submit", (evento) => {
+        evento.preventDefault(); // Evita que el formulario recargue la página
+
+        const nombre = campoNombre.value.trim();
+        const color = campoColor.value;
+        const tema = campoTema.value;
+
+        // Guardar nombre y color con caducidad de 7 días (calculado con Date)
+        crearCookie("nombre_usuario", nombre, 7);
+        crearCookie("color_fondo", color, 7);
+
+        // Guardar tema como cookie de sesión (sin fecha de expiración)
+        crearCookie("tema_visual", tema);
+
+        alert("¡Preferencias guardadas con éxito!");
+    });
+
+    // 5. Restablecer interfaz
+    // Evento 'click' en el botón secundario
+    btnRestablecer.addEventListener("click", () => {
+        // Eliminar por completo las cookies con fecha en el pasado
+        borrarCookie("nombre_usuario");
+        borrarCookie("color_fondo");
+        borrarCookie("tema_visual");
+
+        // Devolver el aspecto visual por defecto
+        document.body.style.backgroundColor = "";
+        document.body.classList.remove("tema-oscuro", "tema-claro");
+
+        // Limpiar controles del formulario
+        campoNombre.value = "";
+        campoColor.value = "#ffffff";
+        campoTema.value = "claro";
+
+        // Eliminar del DOM el bloque de bienvenida usando removeChild()
+        const encabezado = contenedorBienvenida.querySelector("h2");
+        const parrafo = contenedorBienvenida.querySelector("p");
+
+        if (encabezado) {
+            contenedorBienvenida.removeChild(encabezado);
+        }
+        if (parrafo) {
+            contenedorBienvenida.removeChild(parrafo);
+        }
+
+        alert("Interfaz restablecida.");
+    });
 });
